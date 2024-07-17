@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <!-- <link rel="stylesheet" href="style2.css"> -->
+     <style>
+        *{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 300px;
+    margin: 50px auto;
+    background-color: #292929;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+h3{
+    text-align: center;
+    font-size: 30px;
+    padding: 10px;
+    color: #fff;
+}
+
+input{
+    width: 280px;
+    height: 35px;
+    text-align: end;
+    font-size: 25px;
+    padding: 10px;
+    border: none;
+}
+
+input:focus{
+    outline: none;
+}
+
+.show_out{
+    display: flex;
+    width: 280px;
+    height: 35px;
+    background-color: #ffffff;
+    padding: 10px;
+    margin-top: 20px;
+    /* text-align: end; */
+    align-items: flex-end;
+    justify-content: flex-end;
+    
+}
+
+.main{
+    display: block;
+    margin-top: 20px;
+}
+
+.row2{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.num_btn{
+    width: 70px;
+    height: 50px;
+    padding: 2px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 23px;
+    font-weight: bold;
+    margin: 8px;
+    border-radius: 10px;
+    background-color: #9d9898;
+    border: none;
+    color: #fff;
+}
+
+.num_btn:hover{
+    transition: all 0.2s ease;
+    transform: translateY(-4px);
+    scale: 1.05;
+}
+
+.zero{
+    width: 120px;
+    background-color: #f5aa1e;
+}
+
+.c_btn{
+    width: 120px;
+    background-color: #f5aa1e;
+}
+
+.equal{
+    width: 120px;
+    background-color: #f5aa1e;
+}
+
+.operator{
+    background-color: #67667f;
+}
+     </style>
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+            <h3>Calculator</h3>
+            <div class="input_div">
+                <div class="show_out" id="show_out"></div>
+                <input type="text" id="input_val">
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="row2">
+                <!-- <button class="num_btn" id="1">1</button> -->
+                <button class="num_btn c_btn" id="cc"  onclick="clear()">C</button>
+                <button class="num_btn operator" onclick="deleteval()">Del</button>
+                <button class="num_btn operator" id="1"  onclick="moveVal('/')">/</button>
+            </div>
+
+            <div class="row2">
+                <button class="num_btn"   onclick="getVal(7)">7</button>
+                <button class="num_btn" id="1"  onclick="getVal(8)">8</button>
+                <button class="num_btn" id="1"  onclick="getVal(9)">9</button>
+                <button class="num_btn operator" id="1" value='*' onclick="moveVal('*')">x</button>
+            </div>
+
+            <div class="row2">
+                <button class="num_btn" id="1" value='4' onclick="getVal(4)">4</button>
+                <button class="num_btn" id="1" value='5' onclick="getVal(5)">5</button>
+                <button class="num_btn" id="1" value='6' onclick="getVal(6)">6</button>
+                <button class="num_btn operator" id="1" value='-' onclick="moveVal('-')">-</button>
+            </div>
+
+            <div class="row2">
+                <button class="num_btn" id="1" value='1' onclick="getVal(1)">1</button>
+                <button class="num_btn" id="1" value='2' onclick="getVal(2)">2</button>
+                <button class="num_btn" id="1" value='3' onclick="getVal(3)">3</button>
+                <button class="num_btn operator" id="1" value='+' onclick="moveVal('+')">+</button>
+            </div>
+
+            <div class="row2">
+                <!-- <button class="num_btn" id="1">1</button> -->
+                <button class="num_btn zero" id="0" value='0' onclick="getVal(0)">0</button>
+                <button class="num_btn" id="1"  onclick="getVal('.')">.</button>
+                <button class="num_btn equal" id="1"  onclick="calculate()">=</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const buttons = document.querySelectorAll('.num_btn');
+        const display = document.querySelector('#input_val');
+            
+        const C_btn = document.querySelector('#cc');
+        C_btn.addEventListener('click', clear);
+            
+        const oparetor = document.querySelectorAll('.operator');
+        oparetor.addEventListener('click', moveVal);
+            
+        // const show_out = document.querySelector('#show_out');
+            
+            
+            
+        function deleteval(){
+            const display = document.querySelector('#input_val').value;
+        
+            // display.value= display.value.slice(0,-1);
+        
+            if(display==''){
+                const show_out = document.querySelector('.show_out').innerText;
+                document.querySelector('#show_out').innerHTML=show_out.slice(0,-1);
+            }else{
+                document.querySelector('#input_val').value=display.slice(0,-1);
+            }
+        }
+
+
+
+        function getVal(input){
+        
+            display.value += input
+        }
+
+
+        function calculate() {
+            const show_out = document.querySelector('.show_out').innerText;
+            const display = document.querySelector('#input_val').value;
+            const final = (show_out+display);
+
+            const result = eval(final);
+            document.querySelector('#input_val').value=result;
+            document.querySelector('#show_out').innerHTML='';
+        
+        }
+
+
+        function clear() {
+            display.value = '';
+            document.querySelector('#show_out').innerHTML='';
+        }
+
+
+
+        function moveVal(mv){
+            const moveA = (display.value += mv);
+            const show_out = document.querySelector('#show_out').innerText;
+            const move_show_out = (show_out+moveA)
+        
+            document.querySelector('#show_out').innerHTML=move_show_out;
+            display.value = '';
+        
+        }
+
+    </script>
+</body>
+</html>
